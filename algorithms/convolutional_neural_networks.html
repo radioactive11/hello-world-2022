@@ -1,0 +1,1944 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Convolutional Neural Networks &#8212; Machine Learning Handbook</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Recurrent Neural Networks" href="recurrent_neural_networks.html" />
+    <link rel="prev" title="Artificial Neural Networks" href="artificial_neural_networks.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/mlhandbook_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">Machine Learning Handbook</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference external" href="https://www.bpesquet.fr/mlkatas">
+   Machine Learning Katas
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  overview
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview/introduction_to_machine_learning.html">
+   Introduction to Machine Learning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview/machine_learning_in_action.html">
+   Machine Learning in action
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview/introduction_to_reinforcement_learning.html">
+   Introduction to Reinforcement Learning
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Fundamentals
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/handling_data.html">
+   Handling data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/assessing_results.html">
+   Assessing results
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamentals/training_models.html">
+   Training models
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Algorithms
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="classic_ml.html">
+   Classic Machine Learning
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="k_nearest_neighbors.html">
+     K-Nearest Neighbors
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="linear_regression.html">
+     Linear Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="logistic_regression.html">
+     Logistic Regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="decision_trees_and_random_forests.html">
+     Decision Trees &amp; Random Forests
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="bayesian_methods.html">
+     Bayesian Methods
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="support_vector_machines.html">
+     Support Vector Machines
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="k_means.html">
+     K-Means
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="nn_deep_learning.html">
+   Neural Networks and Deep Learning
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="artificial_neural_networks.html">
+     Artificial Neural Networks
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Convolutional Neural Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="recurrent_neural_networks.html">
+     Recurrent Neural Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="autoencoders.html">
+     Autoencoders
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="neural_style_transfer.html">
+     Neural Style Transfer
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="generative_adversarial_networks.html">
+     Generative Adversarial Networks
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="transformers.html">
+     Transformers
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Engineering
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../engineering/introduction_to_mlops.html">
+   Introduction to MLOps
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../engineering/machine_learning_issues.html">
+   Machine Learning issues
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Tools
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../tools/python.html">
+   Python
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../tools/python_ecosystem.html">
+     The Python ecosystem
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../tools/python_cheatsheet.html">
+     Python cheatsheet
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../tools/python_good_practices.html">
+     Python good practices
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/numpy.html">
+   NumPy
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/keras.html">
+   Keras
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tools/pytorch.html">
+   PyTorch
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Reference
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../reference/activation_functions.html">
+   Activation functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../reference/glossary.html">
+   Glossary
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../reference/acknowledgments.html">
+   Acknowledgments
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/bpesquet/mlhandbook/master?urlpath=tree/algorithms/convolutional_neural_networks.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/bpesquet/mlhandbook/blob/master/algorithms/convolutional_neural_networks.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/bpesquet/mlhandbook"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/bpesquet/mlhandbook/issues/new?title=Issue%20on%20page%20%2Falgorithms/convolutional_neural_networks.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/bpesquet/mlhandbook/edit/master/algorithms/convolutional_neural_networks.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/algorithms/convolutional_neural_networks.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#environment-setup">
+   Environment setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#architecture">
+   Architecture
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#justification">
+     Justification
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#topological-structure-of-objects">
+     Topological structure of objects
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#general-cnn-design">
+     General CNN design
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-convolution-operation">
+     The convolution operation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convolution-parameters">
+     Convolution parameters
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#preserving-output-dimensions-with-padding">
+     Preserving output dimensions with padding
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#valid-padding">
+       Valid padding
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#full-padding">
+       Full padding
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#same-padding">
+       Same padding
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convolutions-inputs-and-outputs-tensors">
+     Convolutions inputs and outputs: tensors
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-convolutions-on-3d-tensors">
+     2D convolutions on 3D tensors
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#activation-function">
+     Activation function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-pooling-operation">
+     The pooling operation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pooling-result">
+       Pooling result
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pooling-output">
+       Pooling output
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#interpretation">
+     Interpretation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#history">
+   History
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#humble-beginnings-lenet5-1988">
+     Humble beginnings: LeNet5 (1988)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-breakthrough-ilsvrc">
+     The breakthrough: ILSVRC
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#alexnet-2012">
+     AlexNet (2012)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vgg-2014">
+     VGG (2014)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#googlenet-inception-2014">
+     GoogLeNet/Inception (2014)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#microsoft-resnet-2015">
+     Microsoft ResNet (2015)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#depth-challenges-and-solutions">
+     Depth: challenges and solutions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-a-convnet">
+   Training a convnet
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#general-principle">
+     General principle
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-augmentation">
+     Data augmentation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-training-a-cnn-to-recognize-fashion-items">
+     Example: training a CNN to recognize fashion items
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-preprocessing">
+       Data preprocessing
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#expected-convnet-architecture">
+       Expected convnet architecture
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#convnet-training">
+       Convnet training
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-a-pretrained-convnet">
+   Using a pretrained convnet
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#an-efficient-strategy">
+     An efficient strategy
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#feature-extraction">
+     Feature extraction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fine-tuning">
+     Fine-tuning
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-using-a-pretrained-convnet-to-recognize-common-objects">
+     Example: using a pretrained convnet to recognize common objects
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Convolutional Neural Networks</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#environment-setup">
+   Environment setup
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#architecture">
+   Architecture
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#justification">
+     Justification
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#topological-structure-of-objects">
+     Topological structure of objects
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#general-cnn-design">
+     General CNN design
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-convolution-operation">
+     The convolution operation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convolution-parameters">
+     Convolution parameters
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#preserving-output-dimensions-with-padding">
+     Preserving output dimensions with padding
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#valid-padding">
+       Valid padding
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#full-padding">
+       Full padding
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#same-padding">
+       Same padding
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#convolutions-inputs-and-outputs-tensors">
+     Convolutions inputs and outputs: tensors
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#d-convolutions-on-3d-tensors">
+     2D convolutions on 3D tensors
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#activation-function">
+     Activation function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-pooling-operation">
+     The pooling operation
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pooling-result">
+       Pooling result
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#pooling-output">
+       Pooling output
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#interpretation">
+     Interpretation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#history">
+   History
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#humble-beginnings-lenet5-1988">
+     Humble beginnings: LeNet5 (1988)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-breakthrough-ilsvrc">
+     The breakthrough: ILSVRC
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#alexnet-2012">
+     AlexNet (2012)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vgg-2014">
+     VGG (2014)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#googlenet-inception-2014">
+     GoogLeNet/Inception (2014)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#microsoft-resnet-2015">
+     Microsoft ResNet (2015)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#depth-challenges-and-solutions">
+     Depth: challenges and solutions
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#training-a-convnet">
+   Training a convnet
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#general-principle">
+     General principle
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data-augmentation">
+     Data augmentation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-training-a-cnn-to-recognize-fashion-items">
+     Example: training a CNN to recognize fashion items
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#data-preprocessing">
+       Data preprocessing
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#expected-convnet-architecture">
+       Expected convnet architecture
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#convnet-training">
+       Convnet training
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-a-pretrained-convnet">
+   Using a pretrained convnet
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#an-efficient-strategy">
+     An efficient strategy
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#feature-extraction">
+     Feature extraction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fine-tuning">
+     Fine-tuning
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-using-a-pretrained-convnet-to-recognize-common-objects">
+     Example: using a pretrained convnet to recognize common objects
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="convolutional-neural-networks">
+<h1>Convolutional Neural Networks<a class="headerlink" href="#convolutional-neural-networks" title="Permalink to this headline">#</a></h1>
+<section id="environment-setup">
+<h2>Environment setup<a class="headerlink" href="#environment-setup" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">platform</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python version: </span><span class="si">{</span><span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_version_tuple</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="s2">&quot;6&quot;</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Python version: 3.7.5
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Setup plots</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span>
+<span class="o">%</span><span class="k">config</span> InlineBackend.figure_format = &#39;retina&#39;
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TensorFlow version: </span><span class="si">{</span><span class="n">tf</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Keras version: </span><span class="si">{</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">__version__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;GPU found :)&#39;</span> <span class="k">if</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="s2">&quot;GPU&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;No GPU :(&#39;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">tensorflow.keras.models</span> <span class="kn">import</span> <span class="n">Sequential</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span><span class="p">,</span> <span class="n">Flatten</span><span class="p">,</span> <span class="n">Conv2D</span><span class="p">,</span> <span class="n">MaxPooling2D</span><span class="p">,</span> <span class="n">Dropout</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.datasets</span> <span class="kn">import</span> <span class="n">fashion_mnist</span><span class="p">,</span> <span class="n">cifar10</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.utils</span> <span class="kn">import</span> <span class="n">to_categorical</span>
+<span class="kn">from</span> <span class="nn">tensorflow.keras.applications</span> <span class="kn">import</span> <span class="n">VGG16</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TensorFlow version: 2.3.1
+Keras version: 2.4.0
+No GPU :(
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_loss_acc</span><span class="p">(</span><span class="n">history</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot training and (optionally) validation loss and accuracy</span>
+<span class="sd">    Takes a Keras History object as parameter&quot;&quot;&quot;</span>
+
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;loss&quot;</span><span class="p">]</span>
+    <span class="n">epochs</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="s2">&quot;.--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training loss&quot;</span><span class="p">)</span>
+    <span class="n">final_loss</span> <span class="o">=</span> <span class="n">loss</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Training loss: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">final_loss</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Loss&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;val_loss&quot;</span> <span class="ow">in</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">:</span>
+        <span class="n">val_loss</span> <span class="o">=</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;val_loss&quot;</span><span class="p">]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">val_loss</span><span class="p">,</span> <span class="s2">&quot;o-&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Validation loss&quot;</span><span class="p">)</span>
+        <span class="n">final_val_loss</span> <span class="o">=</span> <span class="n">val_loss</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">title</span> <span class="o">+=</span> <span class="s2">&quot;, Validation loss: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">final_val_loss</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">acc</span><span class="p">,</span> <span class="s2">&quot;.--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Training acc&quot;</span><span class="p">)</span>
+    <span class="n">final_acc</span> <span class="o">=</span> <span class="n">acc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Training accuracy: </span><span class="si">{:.2f}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">final_acc</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Epochs&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;val_accuracy&quot;</span> <span class="ow">in</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">:</span>
+        <span class="n">val_acc</span> <span class="o">=</span> <span class="n">history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s2">&quot;val_accuracy&quot;</span><span class="p">]</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">epochs</span><span class="p">,</span> <span class="n">val_acc</span><span class="p">,</span> <span class="s2">&quot;o-&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Validation acc&quot;</span><span class="p">)</span>
+        <span class="n">final_val_acc</span> <span class="o">=</span> <span class="n">val_acc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">title</span> <span class="o">+=</span> <span class="s2">&quot;, Validation accuracy: </span><span class="si">{:.2f}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">final_val_acc</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="architecture">
+<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">#</a></h2>
+<section id="justification">
+<h3>Justification<a class="headerlink" href="#justification" title="Permalink to this headline">#</a></h3>
+<p>The visual world has the following properties:</p>
+<ul class="simple">
+<li><p>Translation invariance.</p></li>
+<li><p>Locality: nearby pixels are more strongly correlated</p></li>
+<li><p>Spatial hierarchy: complex and abstract concepts are composed from simple, local elements.</p></li>
+</ul>
+<p>Classical models are not designed to detect local patterns in images.</p>
+<p><a class="reference external" href="https://youtu.be/shVKhOmT0HE"><img alt="Visual world" src="../_images/visual_world.png" /></a></p>
+</section>
+<section id="topological-structure-of-objects">
+<h3>Topological structure of objects<a class="headerlink" href="#topological-structure-of-objects" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://youtu.be/shVKhOmT0HE"><img alt="Topological structure" src="../_images/topological_structure.png" /></a></p>
+<p><a class="reference external" href="https://youtu.be/shVKhOmT0HE"><img alt="From edges to objects" src="../_images/edges_to_objects.png" /></a></p>
+</section>
+<section id="general-cnn-design">
+<h3>General CNN design<a class="headerlink" href="#general-cnn-design" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://developers.google.com/machine-learning/practica/image-classification/convolutional-neural-networks"><img alt="General CNN architecture" src="../_images/cnn_architecture.png" /></a></p>
+</section>
+<section id="the-convolution-operation">
+<h3>The convolution operation<a class="headerlink" href="#the-convolution-operation" title="Permalink to this headline">#</a></h3>
+<p>Apply a <strong>kernel</strong> to data. Result is called a <strong>feature map</strong>.</p>
+<p><a class="reference external" href="https://developers.google.com/machine-learning/practica/image-classification/convolutional-neural-networks"><img alt="Convolution with a 3x3 filter of depth 1 applied on 5x5 data" src="../_images/convolution_overview.gif" /></a></p>
+<p><img alt="Convolution example" src="../_images/convolution_example.jpeg" /></p>
+</section>
+<section id="convolution-parameters">
+<h3>Convolution parameters<a class="headerlink" href="#convolution-parameters" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><strong>Filter dimensions</strong>: 2D for images.</p></li>
+<li><p><strong>Filter size</strong>: generally 3x3 or 5x5.</p></li>
+<li><p><strong>Number of filters</strong>: determine the number of feature maps created by the convolution operation.</p></li>
+<li><p><strong>Stride</strong>: step for sliding the convolution window. Generally equal to 1.</p></li>
+<li><p><strong>Padding</strong>: blank rows/columns with all-zero values added on sides of the input feature map.</p></li>
+</ul>
+</section>
+<section id="preserving-output-dimensions-with-padding">
+<h3>Preserving output dimensions with padding<a class="headerlink" href="#preserving-output-dimensions-with-padding" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://towardsdatascience.com/types-of-convolutions-in-deep-learning-717013397f4d"><img alt="Preserving output dimensions with padding" src="../_images/2d_convol.gif" /></a></p>
+<section id="valid-padding">
+<h4>Valid padding<a class="headerlink" href="#valid-padding" title="Permalink to this headline">#</a></h4>
+<p>Output size = input size - kernel size + 1</p>
+<p><a class="reference external" href="https://youtu.be/shVKhOmT0HE"><img alt="Valid padding" src="../_images/padding_valid.png" /></a></p>
+</section>
+<section id="full-padding">
+<h4>Full padding<a class="headerlink" href="#full-padding" title="Permalink to this headline">#</a></h4>
+<p>Output size = input size + kernel size - 1</p>
+<p><a class="reference external" href="https://youtu.be/shVKhOmT0HE"><img alt="Valid padding" src="../_images/padding_full.png" /></a></p>
+</section>
+<section id="same-padding">
+<h4>Same padding<a class="headerlink" href="#same-padding" title="Permalink to this headline">#</a></h4>
+<p>Output size = input size</p>
+<p><a class="reference external" href="https://youtu.be/shVKhOmT0HE"><img alt="Valid padding" src="../_images/padding_same.png" /></a></p>
+</section>
+</section>
+<section id="convolutions-inputs-and-outputs-tensors">
+<h3>Convolutions inputs and outputs: tensors<a class="headerlink" href="#convolutions-inputs-and-outputs-tensors" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://youtu.be/shVKhOmT0HE"><img alt="Convolution inputs and outputs" src="../_images/conv_inputs_outputs.png" /></a></p>
+</section>
+<section id="d-convolutions-on-3d-tensors">
+<h3>2D convolutions on 3D tensors<a class="headerlink" href="#d-convolutions-on-3d-tensors" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Convolution input data is 3-dimensional: images with height, width and color channels, or features maps produced by previous layers.</p></li>
+<li><p>Each convolution filter is a collection of <em>kernels</em> with distinct weights, one for every input channel.</p></li>
+<li><p>At each location, every input channel is convolved with the corresponding kernel. The results are summed to compute the (scalar) filter output for the location.</p></li>
+<li><p>Sliding one filter over the input data produces a 2D output feature map.</p></li>
+</ul>
+<p><a class="reference external" href="https://towardsdatascience.com/applied-deep-learning-part-4-convolutional-neural-networks-584bc134c1e2"><img alt="2D convolution on a 32x32x3 image with 10 filters" src="../_images/conv_image.png" /></a></p>
+<p><a class="reference external" href="https://stackoverflow.com/a/44628011/2380880"><img alt="2D convolution over RGB image" src="../_images/2D_conv_over_rgb_image.png" /></a></p>
+</section>
+<section id="activation-function">
+<h3>Activation function<a class="headerlink" href="#activation-function" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Applied to the (scalar) convolution result.</p></li>
+<li><p>Introduces non-linearity in the model.</p></li>
+<li><p>Standard choice: <span class="math notranslate nohighlight">\(ReLU(z) = max(0,z)\)</span></p></li>
+</ul>
+</section>
+<section id="the-pooling-operation">
+<h3>The pooling operation<a class="headerlink" href="#the-pooling-operation" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Reduces the dimensionality of feature maps.</p></li>
+<li><p>Often done by selecting maximum values (<em>max pooling</em>).</p></li>
+</ul>
+<p><a class="reference external" href="https://developers.google.com/machine-learning/practica/image-classification/convolutional-neural-networks"><img alt="Max pooling with 2x2 filter and stride of 2" src="../_images/maxpool_animation.gif" /></a></p>
+<section id="pooling-result">
+<h4>Pooling result<a class="headerlink" href="#pooling-result" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://youtu.be/shVKhOmT0HE"><img alt="Pooling result" src="../_images/pooling_result.png" /></a></p>
+</section>
+<section id="pooling-output">
+<h4>Pooling output<a class="headerlink" href="#pooling-output" title="Permalink to this headline">#</a></h4>
+<p><a class="reference external" href="https://towardsdatascience.com/applied-deep-learning-part-4-convolutional-neural-networks-584bc134c1e2"><img alt="Pooling with a 2x2 filter and stride of 2 on 10 32x32 feature maps" src="../_images/maxpooling_image.png" /></a></p>
+</section>
+</section>
+<section id="interpretation">
+<h3>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Convolution layers act as <strong>feature extractors</strong>.</p></li>
+<li><p>Dense layers use the extracted features to classify data.</p></li>
+</ul>
+<p><img alt="A convnet" src="../_images/convnet.jpeg" /></p>
+<p><a class="reference external" href="https://harishnarayanan.org/writing/artistic-style-transfer/"><img alt="Feature extraction with a CNN" src="../_images/representation_learning.png" /></a></p>
+<p><a class="reference external" href="https://transcranial.github.io/keras-js/#/mnist-cnn"><img alt="Visualizing convnet layers on MNIST" src="../_images/keras_js_layers.png" /></a></p>
+<p><a class="reference external" href="http://scs.ryerson.ca/~aharley/vis/conv/flat.html"><img alt="Another visualization of intermediate layers on MNIST" src="../_images/conv_all_mnist.png" /></a></p>
+</section>
+</section>
+<section id="history">
+<h2>History<a class="headerlink" href="#history" title="Permalink to this headline">#</a></h2>
+<section id="humble-beginnings-lenet5-1988">
+<h3>Humble beginnings: LeNet5 (1988)<a class="headerlink" href="#humble-beginnings-lenet5-1988" title="Permalink to this headline">#</a></h3>
+<p><img alt="LeNet5" src="../_images/lenet5.jpg" /></p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
+
+<span class="n">YouTubeVideo</span><span class="p">(</span><span class="s2">&quot;FwFduRA_L6Q&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="400"
+    height="300"
+    src="https://www.youtube.com/embed/FwFduRA_L6Q"
+    frameborder="0"
+    allowfullscreen
+></iframe>
+</div></div>
+</div>
+</section>
+<section id="the-breakthrough-ilsvrc">
+<h3>The breakthrough: ILSVRC<a class="headerlink" href="#the-breakthrough-ilsvrc" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="http://image-net.org/challenges/LSVRC/"><em>ImageNet Large Scale Visual Recognition Challenge</em></a></p></li>
+<li><p>Worldwide image classification challenge based on the <a class="reference external" href="http://www.image-net.org/">ImageNet</a> dataset.</p></li>
+</ul>
+<p><img alt="ILSVRC results" src="../_images/ILSVRC_results.jpg" /></p>
+</section>
+<section id="alexnet-2012">
+<h3>AlexNet (2012)<a class="headerlink" href="#alexnet-2012" title="Permalink to this headline">#</a></h3>
+<p>Trained on 2 GPU for 5 to 6 days.</p>
+<p><img alt="AlexNet" src="../_images/alexnet2.png" /></p>
+</section>
+<section id="vgg-2014">
+<h3>VGG (2014)<a class="headerlink" href="#vgg-2014" title="Permalink to this headline">#</a></h3>
+<p><img alt="VGG16" src="../_images/vgg16.png" /></p>
+</section>
+<section id="googlenet-inception-2014">
+<h3>GoogLeNet/Inception (2014)<a class="headerlink" href="#googlenet-inception-2014" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>9 Inception modules, more than 100 layers.</p></li>
+<li><p>Trained on several GPU for about a week.</p></li>
+</ul>
+<p><img alt="Inception" src="../_images/google_inception.jpg" /></p>
+</section>
+<section id="microsoft-resnet-2015">
+<h3>Microsoft ResNet (2015)<a class="headerlink" href="#microsoft-resnet-2015" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>152 layers, trained on 8 GPU for 2 to 3 weeks.</p></li>
+<li><p>Smaller error rate than a average human.</p></li>
+</ul>
+<p><img alt="ResNet" src="../_images/resnet_archi.png" /></p>
+<p><img alt="Deeper model" src="../_images/deeper_model.jpg" /></p>
+</section>
+<section id="depth-challenges-and-solutions">
+<h3>Depth: challenges and solutions<a class="headerlink" href="#depth-challenges-and-solutions" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Challenges</p>
+<ul>
+<li><p>Computational complexity</p></li>
+<li><p>Optimization difficulties</p></li>
+</ul>
+</li>
+<li><p>Solutions</p>
+<ul>
+<li><p>Careful initialization</p></li>
+<li><p>Sophisticated optimizers</p></li>
+<li><p>Normalisation layers</p></li>
+<li><p>Network design</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="training-a-convnet">
+<h2>Training a convnet<a class="headerlink" href="#training-a-convnet" title="Permalink to this headline">#</a></h2>
+<section id="general-principle">
+<h3>General principle<a class="headerlink" href="#general-principle" title="Permalink to this headline">#</a></h3>
+<p>Same principle as a dense neural network: <strong>backpropagation</strong> + <strong>gradient descent</strong>.</p>
+<p><a class="reference external" href="https://www.jefkine.com/general/2016/09/05/backpropagation-in-convolutional-neural-networks/">Backpropagation In Convolutional Neural Networks</a></p>
+</section>
+<section id="data-augmentation">
+<h3>Data augmentation<a class="headerlink" href="#data-augmentation" title="Permalink to this headline">#</a></h3>
+<p>By design, convnets are only robust against translation. <strong>Data augmentation</strong> can make them robust against rotation and scaling.</p>
+<p>Principle: the dataset is enriched with new samples created by applying operations on existing ones.</p>
+<p><img alt="Data Augmentation" src="../_images/data_augmentation.png" /></p>
+</section>
+<section id="example-training-a-cnn-to-recognize-fashion-items">
+<h3>Example: training a CNN to recognize fashion items<a class="headerlink" href="#example-training-a-cnn-to-recognize-fashion-items" title="Permalink to this headline">#</a></h3>
+<p>The <a class="reference external" href="https://github.com/zalandoresearch/fashion-mnist">Fashion-MNIST</a> dataset contains 70,000 28x28 grayscale images of fashion items.</p>
+<p>It is slightly more challenging than the ubiquitous MNIST handwritten digits dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the Fashion-MNIST digits dataset</span>
+<span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">),</span> <span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">fashion_mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Training images: </span><span class="si">{</span><span class="n">train_images</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">. Training labels: </span><span class="si">{</span><span class="n">train_labels</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test images: </span><span class="si">{</span><span class="n">test_images</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">. Test labels: </span><span class="si">{</span><span class="n">test_labels</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training images: (60000, 28, 28). Training labels: (60000,)
+Test images: (10000, 28, 28). Test labels: (10000,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the first 10 training images</span>
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">axes_style</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">):</span>  <span class="c1"># Temporary hide Seaborn grid lines</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">train_images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">binary</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/convolutional_neural_networks_44_0.png" src="../_images/convolutional_neural_networks_44_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Labels are integer scalars between 0 and 9</span>
+<span class="n">df_train_labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">train_labels</span><span class="p">)</span>
+<span class="n">df_train_labels</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">}</span>
+<span class="n">df_train_labels</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>48873</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>50246</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>52153</th>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>29803</th>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>23481</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>23519</th>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>18528</th>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>12866</th>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="data-preprocessing">
+<h4>Data preprocessing<a class="headerlink" href="#data-preprocessing" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Change pixel values from (0, 255) to (0, 1)</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">train_images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">test_images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+
+<span class="c1"># Make sure images have shape (28, 28, 1) to apply convolution</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># One-hot encoding of expected results</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">train_labels</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">test_labels</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x_train: </span><span class="si">{</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">. y_train: </span><span class="si">{</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x_test: </span><span class="si">{</span><span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">. y_test: </span><span class="si">{</span><span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_train: (60000, 28, 28, 1). y_train: (60000, 10)
+x_test: (10000, 28, 28, 1). y_test: (10000, 10)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="expected-convnet-architecture">
+<h4>Expected convnet architecture<a class="headerlink" href="#expected-convnet-architecture" title="Permalink to this headline">#</a></h4>
+<p><img alt="Example CNN architecture" src="../_images/example_cnn_architecture.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a linear stack of layers</span>
+<span class="n">cnn_model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+
+<span class="c1"># Convolution module 1: Conv2D+MaxPooling2D</span>
+<span class="c1">#   filters: number of convolution filters</span>
+<span class="c1">#   kernel_size: size of the convolution kernel (2D convolution window)</span>
+<span class="c1">#   input_shape: shape of the input feature map</span>
+<span class="c1">#   (Here, The expected input shape is a 3D tensor corresponding to an image)</span>
+<span class="n">cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+    <span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="c1">#   pool_size: factors by which to downscale (vertical, horizontal)</span>
+<span class="n">cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+
+<span class="c1"># Convolution module 2</span>
+<span class="n">cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">))</span>
+<span class="n">cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">MaxPooling2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+
+<span class="c1"># Flattening the last output feature map (a 3D tensor) to feed the Dense layer</span>
+<span class="n">cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
+<span class="n">cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">))</span>
+<span class="c1"># To fight overfitting</span>
+<span class="n">cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="c1"># Classification layer</span>
+<span class="n">cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print model summary</span>
+<span class="n">cnn_model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv2d (Conv2D)              (None, 26, 26, 32)        320       
+_________________________________________________________________
+max_pooling2d (MaxPooling2D) (None, 13, 13, 32)        0         
+_________________________________________________________________
+conv2d_1 (Conv2D)            (None, 11, 11, 64)        18496     
+_________________________________________________________________
+max_pooling2d_1 (MaxPooling2 (None, 5, 5, 64)          0         
+_________________________________________________________________
+flatten (Flatten)            (None, 1600)              0         
+_________________________________________________________________
+dense (Dense)                (None, 128)               204928    
+_________________________________________________________________
+dropout (Dropout)            (None, 128)               0         
+_________________________________________________________________
+dense_1 (Dense)              (None, 10)                1290      
+=================================================================
+Total params: 225,034
+Trainable params: 225,034
+Non-trainable params: 0
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="convnet-training">
+<h4>Convnet training<a class="headerlink" href="#convnet-training" title="Permalink to this headline">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Preparing the model for training</span>
+<span class="n">cnn_model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;categorical_crossentropy&quot;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Training the model, using 10% of the training set for validation</span>
+<span class="c1"># (May take several minutes depending on your system)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.1</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/10
+422/422 - 26s - loss: 0.5861 - accuracy: 0.7897 - val_loss: 0.3855 - val_accuracy: 0.8582
+Epoch 2/10
+422/422 - 25s - loss: 0.3822 - accuracy: 0.8639 - val_loss: 0.3370 - val_accuracy: 0.8768
+Epoch 3/10
+422/422 - 26s - loss: 0.3342 - accuracy: 0.8799 - val_loss: 0.3098 - val_accuracy: 0.8857
+Epoch 4/10
+422/422 - 26s - loss: 0.3036 - accuracy: 0.8916 - val_loss: 0.2872 - val_accuracy: 0.8978
+Epoch 5/10
+422/422 - 26s - loss: 0.2855 - accuracy: 0.8980 - val_loss: 0.2693 - val_accuracy: 0.9047
+Epoch 6/10
+422/422 - 25s - loss: 0.2677 - accuracy: 0.9037 - val_loss: 0.2637 - val_accuracy: 0.9013
+Epoch 7/10
+422/422 - 25s - loss: 0.2524 - accuracy: 0.9097 - val_loss: 0.2612 - val_accuracy: 0.9085
+Epoch 8/10
+422/422 - 25s - loss: 0.2379 - accuracy: 0.9156 - val_loss: 0.2675 - val_accuracy: 0.9027
+Epoch 9/10
+422/422 - 25s - loss: 0.2261 - accuracy: 0.9188 - val_loss: 0.2547 - val_accuracy: 0.9080
+Epoch 10/10
+422/422 - 25s - loss: 0.2157 - accuracy: 0.9228 - val_loss: 0.2542 - val_accuracy: 0.9082
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot training history</span>
+<span class="n">plot_loss_acc</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/convolutional_neural_networks_53_0.png" src="../_images/convolutional_neural_networks_53_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluate model performance on test data</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">test_acc</span> <span class="o">=</span> <span class="n">cnn_model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test accuracy: </span><span class="si">{</span><span class="n">test_acc</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test accuracy: 0.90320
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="using-a-pretrained-convnet">
+<h2>Using a pretrained convnet<a class="headerlink" href="#using-a-pretrained-convnet" title="Permalink to this headline">#</a></h2>
+<section id="an-efficient-strategy">
+<h3>An efficient strategy<a class="headerlink" href="#an-efficient-strategy" title="Permalink to this headline">#</a></h3>
+<p>A <em>pretrained convnet</em> is a saved network that was previously trained on a large dataset (typically on a large-scale image classification task). If the training set was general enough, it can act as a generic model and its learned features can be useful for many problems.</p>
+<p>It is an example of <em>transfer learning</em>.</p>
+<p>There are two ways to use a pretrained model: <em>feature extraction</em> and <em>fine-tuning</em>.</p>
+</section>
+<section id="feature-extraction">
+<h3>Feature extraction<a class="headerlink" href="#feature-extraction" title="Permalink to this headline">#</a></h3>
+<p>Reuse the convolution base of a pretrained model, and add a custom classifier trained from scratch on top ot if.</p>
+<p>State-of-the-art models (VGG, ResNet, Inception…) are regularly published by top AI institutions.</p>
+</section>
+<section id="fine-tuning">
+<h3>Fine-tuning<a class="headerlink" href="#fine-tuning" title="Permalink to this headline">#</a></h3>
+<p>Slightly adjusts the top feature extraction layers of the model being reused, in order to make it more relevant for the new context.</p>
+<p>These top layers and the custom classification layers on top of them are jointly trained.</p>
+<p><img alt="Fine-tuning" src="../_images/fine_tuning.png" /></p>
+</section>
+<section id="example-using-a-pretrained-convnet-to-recognize-common-objects">
+<h3>Example: using a pretrained convnet to recognize common objects<a class="headerlink" href="#example-using-a-pretrained-convnet-to-recognize-common-objects" title="Permalink to this headline">#</a></h3>
+<p>The <a class="reference external" href="https://www.cs.toronto.edu/~kriz/cifar.html">CIFAR10</a> dataset consists of 60,000 32x32 colour images in 10 classes, with 6,000 images per class. The classes are completely mutually exclusive.</p>
+<p>There are 50,000 training images and 10,000 test images.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the CIFAR10 dataset</span>
+<span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">),</span> <span class="p">(</span><span class="n">test_images</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">cifar10</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Training images: </span><span class="si">{</span><span class="n">train_images</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">. Training labels: </span><span class="si">{</span><span class="n">train_labels</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test images: </span><span class="si">{</span><span class="n">test_images</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">. Test labels: </span><span class="si">{</span><span class="n">test_labels</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training images: (50000, 32, 32, 3). Training labels: (50000, 1)
+Test images: (10000, 32, 32, 3). Test labels: (10000, 1)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the first training images</span>
+<span class="k">with</span> <span class="n">sns</span><span class="o">.</span><span class="n">axes_style</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">):</span>  <span class="c1"># Temporary hide Seaborn grid lines</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">train_images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">binary</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/convolutional_neural_networks_61_0.png" src="../_images/convolutional_neural_networks_61_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Change pixel values from (0, 255) to (0, 1)</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">train_images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">test_images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float32&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">255</span>
+
+<span class="c1"># One-hot encoding of expected results</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">train_labels</span><span class="p">)</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">to_categorical</span><span class="p">(</span><span class="n">test_labels</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x_train: </span><span class="si">{</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">. y_train: </span><span class="si">{</span><span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x_test: </span><span class="si">{</span><span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">. y_test: </span><span class="si">{</span><span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x_train: (50000, 32, 32, 3). y_train: (50000, 10)
+x_test: (10000, 32, 32, 3). y_test: (10000, 10)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Using the convolutional base of VGG16</span>
+<span class="n">conv_base</span> <span class="o">=</span> <span class="n">VGG16</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="s2">&quot;imagenet&quot;</span><span class="p">,</span> <span class="n">include_top</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Freezing the convolutional base</span>
+<span class="c1"># This prevents weight updates during training</span>
+<span class="n">conv_base</span><span class="o">.</span><span class="n">trainable</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">conv_base</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;vgg16&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         [(None, 32, 32, 3)]       0         
+_________________________________________________________________
+block1_conv1 (Conv2D)        (None, 32, 32, 64)        1792      
+_________________________________________________________________
+block1_conv2 (Conv2D)        (None, 32, 32, 64)        36928     
+_________________________________________________________________
+block1_pool (MaxPooling2D)   (None, 16, 16, 64)        0         
+_________________________________________________________________
+block2_conv1 (Conv2D)        (None, 16, 16, 128)       73856     
+_________________________________________________________________
+block2_conv2 (Conv2D)        (None, 16, 16, 128)       147584    
+_________________________________________________________________
+block2_pool (MaxPooling2D)   (None, 8, 8, 128)         0         
+_________________________________________________________________
+block3_conv1 (Conv2D)        (None, 8, 8, 256)         295168    
+_________________________________________________________________
+block3_conv2 (Conv2D)        (None, 8, 8, 256)         590080    
+_________________________________________________________________
+block3_conv3 (Conv2D)        (None, 8, 8, 256)         590080    
+_________________________________________________________________
+block3_pool (MaxPooling2D)   (None, 4, 4, 256)         0         
+_________________________________________________________________
+block4_conv1 (Conv2D)        (None, 4, 4, 512)         1180160   
+_________________________________________________________________
+block4_conv2 (Conv2D)        (None, 4, 4, 512)         2359808   
+_________________________________________________________________
+block4_conv3 (Conv2D)        (None, 4, 4, 512)         2359808   
+_________________________________________________________________
+block4_pool (MaxPooling2D)   (None, 2, 2, 512)         0         
+_________________________________________________________________
+block5_conv1 (Conv2D)        (None, 2, 2, 512)         2359808   
+_________________________________________________________________
+block5_conv2 (Conv2D)        (None, 2, 2, 512)         2359808   
+_________________________________________________________________
+block5_conv3 (Conv2D)        (None, 2, 2, 512)         2359808   
+_________________________________________________________________
+block5_pool (MaxPooling2D)   (None, 1, 1, 512)         0         
+=================================================================
+Total params: 14,714,688
+Trainable params: 0
+Non-trainable params: 14,714,688
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create our new model</span>
+<span class="n">pretrained_cnn_model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+<span class="c1"># Add VGG as its base</span>
+<span class="n">pretrained_cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">conv_base</span><span class="p">)</span>
+<span class="c1"># Add a Dense classifier on top of the pretrained base</span>
+<span class="n">pretrained_cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Flatten</span><span class="p">())</span>
+<span class="n">pretrained_cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;relu&quot;</span><span class="p">))</span>
+<span class="n">pretrained_cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">pretrained_cnn_model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s2">&quot;softmax&quot;</span><span class="p">))</span>
+
+<span class="n">pretrained_cnn_model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model: &quot;sequential_1&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+vgg16 (Functional)           (None, 1, 1, 512)         14714688  
+_________________________________________________________________
+flatten_1 (Flatten)          (None, 512)               0         
+_________________________________________________________________
+dense_2 (Dense)              (None, 512)               262656    
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 512)               0         
+_________________________________________________________________
+dense_3 (Dense)              (None, 10)                5130      
+=================================================================
+Total params: 14,982,474
+Trainable params: 267,786
+Non-trainable params: 14,714,688
+_________________________________________________________________
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Preparing the model for training</span>
+<span class="n">pretrained_cnn_model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="n">optimizer</span><span class="o">=</span><span class="s2">&quot;adam&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;categorical_crossentropy&quot;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Training the model, using 10% of the training set for validation</span>
+<span class="c1"># (May take several minutes depending on your system)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">pretrained_cnn_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.1</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/20
+1407/1407 [==============================] - 318s 226ms/step - loss: 1.4528 - accuracy: 0.4889 - val_loss: 1.2485 - val_accuracy: 0.5622
+Epoch 2/20
+1407/1407 [==============================] - 307s 218ms/step - loss: 1.2735 - accuracy: 0.5536 - val_loss: 1.1642 - val_accuracy: 0.5968
+Epoch 3/20
+1407/1407 [==============================] - 9552s 7s/step - loss: 1.2200 - accuracy: 0.5700 - val_loss: 1.1345 - val_accuracy: 0.6000
+Epoch 4/20
+1407/1407 [==============================] - 17599s 13s/step - loss: 1.1845 - accuracy: 0.5829 - val_loss: 1.1143 - val_accuracy: 0.6118
+Epoch 5/20
+1407/1407 [==============================] - 307s 219ms/step - loss: 1.1577 - accuracy: 0.5936 - val_loss: 1.1115 - val_accuracy: 0.6158
+Epoch 6/20
+1407/1407 [==============================] - 309s 220ms/step - loss: 1.1330 - accuracy: 0.6043 - val_loss: 1.0977 - val_accuracy: 0.6144
+Epoch 7/20
+1407/1407 [==============================] - 283s 201ms/step - loss: 1.1148 - accuracy: 0.6071 - val_loss: 1.0855 - val_accuracy: 0.6190
+Epoch 8/20
+1407/1407 [==============================] - 275s 195ms/step - loss: 1.0938 - accuracy: 0.6144 - val_loss: 1.0883 - val_accuracy: 0.6140
+Epoch 9/20
+1407/1407 [==============================] - 951s 676ms/step - loss: 1.0749 - accuracy: 0.6228 - val_loss: 1.0831 - val_accuracy: 0.6242
+Epoch 10/20
+1407/1407 [==============================] - 284s 202ms/step - loss: 1.0620 - accuracy: 0.6257 - val_loss: 1.0767 - val_accuracy: 0.6202
+Epoch 11/20
+1407/1407 [==============================] - 286s 203ms/step - loss: 1.0435 - accuracy: 0.6302 - val_loss: 1.0717 - val_accuracy: 0.6266
+Epoch 12/20
+1407/1407 [==============================] - 286s 204ms/step - loss: 1.0284 - accuracy: 0.6363 - val_loss: 1.0729 - val_accuracy: 0.6258
+Epoch 13/20
+1407/1407 [==============================] - 277s 197ms/step - loss: 1.0119 - accuracy: 0.6420 - val_loss: 1.0881 - val_accuracy: 0.6168
+Epoch 14/20
+1407/1407 [==============================] - 273s 194ms/step - loss: 1.0008 - accuracy: 0.6466 - val_loss: 1.0772 - val_accuracy: 0.6286
+Epoch 15/20
+1407/1407 [==============================] - 273s 194ms/step - loss: 0.9804 - accuracy: 0.6498 - val_loss: 1.0703 - val_accuracy: 0.6246
+Epoch 16/20
+1407/1407 [==============================] - 273s 194ms/step - loss: 0.9735 - accuracy: 0.6566 - val_loss: 1.0654 - val_accuracy: 0.6278
+Epoch 17/20
+1407/1407 [==============================] - 299s 212ms/step - loss: 0.9625 - accuracy: 0.6599 - val_loss: 1.0730 - val_accuracy: 0.6262
+Epoch 18/20
+1407/1407 [==============================] - 287s 204ms/step - loss: 0.9469 - accuracy: 0.6618 - val_loss: 1.0576 - val_accuracy: 0.6330
+Epoch 19/20
+1407/1407 [==============================] - 281s 200ms/step - loss: 0.9359 - accuracy: 0.6667 - val_loss: 1.0725 - val_accuracy: 0.6388
+Epoch 20/20
+1407/1407 [==============================] - 280s 199ms/step - loss: 0.9224 - accuracy: 0.6719 - val_loss: 1.0847 - val_accuracy: 0.6340
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot training history</span>
+<span class="n">plot_loss_acc</span><span class="p">(</span><span class="n">history</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/convolutional_neural_networks_66_0.png" src="../_images/convolutional_neural_networks_66_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluate model performance on test data</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">test_acc</span> <span class="o">=</span> <span class="n">pretrained_cnn_model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test accuracy: </span><span class="si">{</span><span class="n">test_acc</span><span class="si">:</span><span class="s2">.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test accuracy: 0.62750
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./algorithms"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="artificial_neural_networks.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Artificial Neural Networks</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="recurrent_neural_networks.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Recurrent Neural Networks</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Baptiste Pesquet<br/>
+  
+      &copy; Copyright 2021.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
